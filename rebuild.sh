@@ -16,7 +16,7 @@ make od_${CONFIG}_defconfig BR2_EXTERNAL=board/opendingux O=output/${CONFIG}
 
 # Perform the build.
 echo "Starting build..."
-nice make sdk BR2_SDK_PREFIX=${CONFIG}-toolchain O=output/${CONFIG}
+nice make -j9 sdk BR2_SDK_PREFIX=${CONFIG}-toolchain O=output/${CONFIG}
 
 echo "Recompressing SDK to XZ..."
 ARCHIVE_NAME=opendingux-${CONFIG}-toolchain.`date +'%Y-%m-%d'`
