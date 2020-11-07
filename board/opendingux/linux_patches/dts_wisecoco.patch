@@ -1,0 +1,13 @@
+diff --git a/arch/mips/boot/dts/ingenic/rg350.dts b/arch/mips/boot/dts/ingenic/rg350.dts
+index 971108621b36..b92a1e553aa3 100644
+--- a/arch/mips/boot/dts/ingenic/rg350.dts
++++ b/arch/mips/boot/dts/ingenic/rg350.dts
+@@ -8,7 +8,7 @@ / {
+ 	model = "Anbernic RG-350";
+ 
+ 	panel {
+-		compatible = "frida,frd350h54004";
++		compatible = "wisecoco,jt035ips02";
+ 
+ 		reset-gpios = <&gpe 2 GPIO_ACTIVE_LOW>;
+ 
