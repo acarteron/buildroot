@@ -1,5 +1,5 @@
 diff --git a/src/board-gcw0.c b/src/board-gcw0.c
-index 5fce5ce..45eee3a 100644
+index 5fce5ce..35de0fe 100644
 --- a/src/board-gcw0.c
 +++ b/src/board-gcw0.c
 @@ -25,7 +25,7 @@
@@ -7,7 +7,20 @@ index 5fce5ce..45eee3a 100644
  
  #define FVCO_MIN  300*1000*1000	/* 300 MHz */
 -#define FVCO_MAX  1000*1000*1000	/* 1 GHz */
-+#define FVCO_MAX  1000*1000*1200	/* 1.2 GHz */
++#define FVCO_MAX  1000*1000*1120	/* 1.18 GHz */
  
  /* The frequency after the input divider must be between 10 and 50 MHz.
  The highest divider yields the best resolution. */
+diff --git a/src/config-gcw0.h b/src/config-gcw0.h
+index 3f91066..0534b4e 100644
+--- a/src/config-gcw0.h
++++ b/src/config-gcw0.h
+@@ -4,7 +4,7 @@
+ #error Include "config.h" instead
+ #endif
+ 
+-#define CFG_CPU_SPEED		1020000000
++#define CFG_CPU_SPEED		1120000000
+ #define CFG_EXTAL			12000000
+ 
+ #define MBR_PRELOAD_ADDR	0x80000000
