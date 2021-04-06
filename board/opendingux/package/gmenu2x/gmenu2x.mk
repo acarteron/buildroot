@@ -6,7 +6,7 @@
 # GMENU2X_VERSION = 480p
 # GMENU2X_SITE = $(call github,acarteron,gmenu2x,$(GMENU2X_VERSION))
 
-GMENU2X_VERSION = c6e2883
+GMENU2X_VERSION = b494b8c
 GMENU2X_SITE = $(call github,opendingux,gmenu2x,$(GMENU2X_VERSION))
 
 GMENU2X_DEPENDENCIES = sdl sdl_ttf sdl_gfx dejavu libpng fonts-droid
