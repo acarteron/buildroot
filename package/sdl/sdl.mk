@@ -4,10 +4,12 @@
 #
 ################################################################################
 
-SDL_VERSION = 4413f6d18
+SDL_VERSION = 4931cd4ed
 SDL_SITE = $(call github,OpenDingux,SDL,$(SDL_VERSION))
 SDL_LICENSE = LGPL-2.1+
 SDL_LICENSE_FILES = COPYING
+SDL_CPE_ID_VENDOR = libsdl
+SDL_CPE_ID_PRODUCT = simple_directmedia_layer
 SDL_INSTALL_STAGING = YES
 
 # we're patching configure.in, but package cannot autoreconf with our version of

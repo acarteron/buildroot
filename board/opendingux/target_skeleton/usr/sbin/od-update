@@ -16,6 +16,9 @@ HWVARIANT_BL=""
 HWVARIANT_DT=""
 
 HWVARIANT_CMDLINE="$(sed -n 's/.*hwvariant=\([[:alnum:]_]\+\).*/\1/p' /proc/cmdline)"
+
+MODEL=ylm,rg350
+
 # if [ -e /sys/firmware/devicetree/base/compatible ] ; then
 # 	MODEL=$(sed -n 's/\(.*\)ingenic.*/\1/p' /sys/firmware/devicetree/base/compatible)
 # 	HWVARIANT=$(cat /sys/firmware/devicetree/base/model)
@@ -25,29 +28,39 @@ HWVARIANT_CMDLINE="$(sed -n 's/.*hwvariant=\([[:alnum:]_]\+\).*/\1/p' /proc/cmdl
 # 		MODEL=ylm,rg350m
 # 	elif [ "$(uname -v)" = "#128 Fri May 29 11:19:07 CST 2020" ] ; then
 # 		MODEL=ylm,rg280m
+# 	elif [ "$(uname -v)" = "#171 Tue Jun 30 18:36:05 CST 2020" ] ; then
+# 		MODEL=ylm,rg280v
+# 	elif [ "$(uname -v)" = "#2 Sat Mar 28 16:19:20 CST 2020" ] ; then
+# 		MODEL=wolsen,playgo
 # 	else
 # 		MODEL=ylm,rg350
 # 	fi
 # else
-# 	MODEL=gcw,zero
-# 	HWVARIANT="$HWVARIANT_CMDLINE"
+# 	case "$HWVARIANT_CMDLINE" in
+# 		v11_ddr2_256mb|v20_mddr_512mb)
+# 			MODEL=gcw,zero
+# 			HWVARIANT="$HWVARIANT_CMDLINE"
+# 			;;
+# 		*)
+# 			echo "Unknown device."
+# 			exit 1
+# 			;;
+# 	esac
 # fi
-MODEL=ylm,rg350
+
+# Default to SYSDEV=/dev/mmcblk0
+SYSDEV=$(echo $SYSPART |sed -n 's/\(\/dev\/mmcblk[0-9]\+\)p[0-9]\+/\1/p')
+
+[ "$MODEL" = "retromini" ] && MODEL=ylm,rs90
 
 case "$MODEL" in
-	retromini|ylm,rs90)
+	ylm,rs90|ylm,pmp5|ylm,rg99)
 		HWVARIANT_BL="$HWVARIANT_CMDLINE"
-		HWVARIANT_DT="rs90"
+		HWVARIANT_DT=$(echo $MODEL |cut -d',' -f2)
 		INSTALL_ON_NAND=Y
 		SYSDEV=/dev/mtd0
 		;;
-	ylm,pmp5)
-		HWVARIANT_BL="$HWVARIANT_CMDLINE"
-		HWVARIANT_DT="pmp5"
-		INSTALL_ON_NAND=Y
-		SYSDEV=/dev/mtd0
-		;;
-	ylm,rs97|ylm,rg300)
+	ylm,rs97|ylm,rg300|wolsen,ldkv|wolsen,ldkh)
 		HWVARIANT_BL="lepus"
 		HWVARIANT_DT=$(echo $MODEL |cut -d',' -f2)
 		;;
@@ -62,12 +75,10 @@ case "$MODEL" in
 				HWVARIANT_DT="gcw0_proto"
 				;;
 		esac
-		SYSDEV=$(echo $SYSPART |sed -n 's/\(\/dev\/mmcblk[0-9]\+\)p[0-9]\+/\1/p')
 		;;
-	anbernic,rg350|anbernic,rg350m|ylm,rg350|ylm,rg350m|ylm,rg280m|ylm,rg280v)
+	anbernic,rg350|anbernic,rg350m|ylm,rg350|ylm,rg350m|ylm,rg280m|ylm,rg280v|wolsen,playgo)
 		HWVARIANT_DT=$(echo $MODEL |cut -d',' -f2)
 		HWVARIANT_BL="rg350"
-		SYSDEV=$(echo $SYSPART |sed -n 's/\(\/dev\/mmcblk[0-9]\+\)p[0-9]\+/\1/p')
 		;;
 	*)
 		echo "Unknown model $MODEL"

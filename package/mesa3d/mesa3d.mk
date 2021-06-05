@@ -5,7 +5,7 @@
 ################################################################################
 
 # When updating the version, please also update mesa3d-headers
-MESA3D_VERSION = 20.2.2
+MESA3D_VERSION = 20.3.4
 MESA3D_SOURCE = mesa-$(MESA3D_VERSION).tar.xz
 MESA3D_SITE = https://mesa.freedesktop.org/archive
 MESA3D_LICENSE = MIT, SGI, Khronos
@@ -71,7 +71,7 @@ endif
 else
 MESA3D_CONF_OPTS += \
 	-Dglx=disabled \
-	-Dgallium-xa=false
+	-Dgallium-xa=disabled
 endif
 
 ifeq ($(BR2_ARM_CPU_HAS_NEON),y)
@@ -165,7 +165,9 @@ MESA3D_CONF_OPTS += -Dgallium-va=disabled
 # libGL is only provided for a full xorg stack
 ifeq ($(BR2_PACKAGE_MESA3D_OPENGL_GLX),y)
 MESA3D_PROVIDES += libgl
-else
+endif
+
+ifneq ($(BR2_PACKAGE_MESA3D_INSTALL_GL_HEADERS),y)
 define MESA3D_REMOVE_OPENGL_HEADERS
 	rm -rf $(STAGING_DIR)/usr/include/GL/
 endef
